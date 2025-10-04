@@ -63,9 +63,9 @@ export function QuizScreen() {
   const answeredCount = Object.keys(answers).length;
 
   return (
-    <div className="min-h-screen py-12 px-4 animate-fade-in">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
+    <div className="min-h-screen py-16 px-4 animate-fade-in">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-10">
           <ProgressBar current={answeredCount} total={questions.length} />
         </div>
 
@@ -77,32 +77,33 @@ export function QuizScreen() {
           onSelect={handleSelectAnswer}
         />
 
-        <nav className="flex justify-between items-center mt-8" aria-label="Quiz navigation">
+        <nav className="flex justify-between items-center mt-10 gap-4" aria-label="Quiz navigation">
           <Button
             onClick={handlePrevious}
             disabled={!canGoPrevious}
             variant="outline"
             size="lg"
-            className="min-w-32"
+            className="min-w-40 text-lg py-6 border-2 hover:border-primary hover:shadow-lg transition-all"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             Previous
           </Button>
 
-          <div className="text-sm text-muted-foreground">
-            Use ← → arrow keys to navigate
+          <div className="text-sm text-muted-foreground text-center px-4">
+            <div className="mb-1">⌨️ Keyboard shortcuts</div>
+            <div className="font-mono text-xs">← → arrow keys</div>
           </div>
 
           <Button
             onClick={handleNext}
             disabled={!canGoNext}
             size="lg"
-            className="btn-gradient min-w-32"
+            className={`min-w-40 text-lg py-6 font-bold ${isLastQuestion ? 'btn-hero' : 'btn-gradient'}`}
           >
             {isLastQuestion ? (
               <>
                 <Check className="w-5 h-5 mr-2" />
-                Submit
+                Submit Quiz
               </>
             ) : (
               <>

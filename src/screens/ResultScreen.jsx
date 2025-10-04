@@ -4,6 +4,7 @@ import { ResultSummary } from '@/components/ResultSummary';
 import { QuestionCard } from '@/components/QuestionCard';
 import { useQuiz } from '@/context/QuizContext';
 import { generateFeedback } from '@/services/aiService';
+import { Confetti } from '@/components/Confetti';
 import { Home, ChevronDown, ChevronUp } from 'lucide-react';
 
 export function ResultScreen() {
@@ -11,6 +12,7 @@ export function ResultScreen() {
   const { questions, answers, feedback } = state;
   const [showReview, setShowReview] = useState(false);
   const [loadingFeedback, setLoadingFeedback] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(true);
 
   // Calculate score
   const score = questions.reduce((acc, question) => {
@@ -44,31 +46,38 @@ export function ResultScreen() {
   }, []);
 
   const handleReset = () => {
+    setShowConfetti(false);
     dispatch({ type: actions.RESET_QUIZ });
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => setShowConfetti(false), 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen py-12 px-4 animate-fade-in">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen py-16 px-4 animate-fade-in">
+      {showConfetti && score >= questions.length * 0.6 && <Confetti />}
+      <div className="max-w-4xl mx-auto">
         <ResultSummary
           score={score}
           total={questions.length}
           feedback={loadingFeedback ? 'Generating personalized feedback...' : feedback}
         />
 
-        <div className="mt-8">
+        <div className="mt-10">
           <button
             onClick={() => setShowReview(!showReview)}
-            className="w-full flex items-center justify-between p-4 bg-muted hover:bg-muted/80 rounded-lg transition-colors"
+            className="w-full flex items-center justify-between p-6 bg-gradient-to-r from-muted to-muted/50 hover:from-primary/10 hover:to-accent/10 rounded-2xl transition-all duration-300 border-2 border-border hover:border-primary shadow-md hover:shadow-lg"
             aria-expanded={showReview}
           >
-            <span className="font-semibold text-foreground">
+            <span className="font-bold text-lg text-foreground">
               {showReview ? 'Hide' : 'Review'} Your Answers
             </span>
             {showReview ? (
-              <ChevronUp className="w-5 h-5" />
+              <ChevronUp className="w-6 h-6 text-primary" />
             ) : (
-              <ChevronDown className="w-5 h-5" />
+              <ChevronDown className="w-6 h-6 text-primary" />
             )}
           </button>
 
@@ -89,9 +98,9 @@ export function ResultScreen() {
           )}
         </div>
 
-        <div className="text-center mt-8">
-          <Button onClick={handleReset} size="lg" className="btn-gradient">
-            <Home className="w-5 h-5 mr-2" />
+        <div className="text-center mt-10">
+          <Button onClick={handleReset} size="lg" className="btn-hero text-xl px-12 py-8 font-bold rounded-2xl">
+            <Home className="w-6 h-6 mr-3" />
             Take Another Quiz
           </Button>
         </div>

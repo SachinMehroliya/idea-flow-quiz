@@ -3,9 +3,9 @@ import { Card } from '@/components/ui/card';
 export function TopicCard({ topic, icon, isSelected, onClick }) {
   return (
     <Card
-      className={`card-elevated cursor-pointer p-6 text-center transition-all duration-300 ${
+      className={`card-elevated cursor-pointer p-8 text-center transition-all duration-300 ${
         isSelected
-          ? 'ring-2 ring-primary scale-105'
+          ? 'ring-4 ring-primary shadow-glow-lg scale-105 bg-gradient-to-br from-primary/5 to-accent/5'
           : 'hover:scale-105'
       }`}
       onClick={onClick}
@@ -19,8 +19,10 @@ export function TopicCard({ topic, icon, isSelected, onClick }) {
       }}
       aria-pressed={isSelected}
     >
-      <div className="text-5xl mb-3">{icon}</div>
-      <h3 className="text-lg font-semibold text-foreground">{topic}</h3>
+      <div className="text-6xl mb-4 topic-icon">{icon}</div>
+      <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        {topic}
+      </h3>
     </Card>
   );
 }

@@ -5,38 +5,54 @@ export function ResultSummary({ score, total, feedback }) {
   const percentage = (score / total) * 100;
   
   const getGrade = () => {
-    if (percentage >= 80) return { icon: Trophy, text: 'Excellent!', color: 'text-success' };
-    if (percentage >= 60) return { icon: Star, text: 'Good Job!', color: 'text-primary' };
-    return { icon: Target, text: 'Keep Learning!', color: 'text-secondary' };
+    if (percentage >= 80) return { 
+      icon: Trophy, 
+      text: 'Outstanding!', 
+      gradient: 'from-success via-success-light to-success',
+      glow: 'shadow-[0_0_80px_hsl(145_80%_42%/0.6)]'
+    };
+    if (percentage >= 60) return { 
+      icon: Star, 
+      text: 'Great Work!', 
+      gradient: 'from-primary via-primary-light to-accent',
+      glow: 'shadow-glow-lg'
+    };
+    return { 
+      icon: Target, 
+      text: 'Keep Going!', 
+      gradient: 'from-secondary via-secondary-light to-accent',
+      glow: 'shadow-[0_0_80px_hsl(340_100%_65%/0.6)]'
+    };
   };
 
   const grade = getGrade();
   const GradeIcon = grade.icon;
 
   return (
-    <Card className="card-elevated p-8 text-center animate-scale-in">
-      <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary-dark mb-6`}>
-        <GradeIcon className="w-12 h-12 text-primary-foreground" />
+    <Card className="card-elevated p-12 text-center animate-scale-in shadow-glow-lg">
+      <div className={`inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br ${grade.gradient} ${grade.glow} mb-8 float-animation`}>
+        <GradeIcon className="w-16 h-16 text-white drop-shadow-lg" />
       </div>
 
-      <h2 className={`text-3xl font-bold mb-2 ${grade.color}`}>
+      <h2 className={`text-5xl font-black mb-4 bg-gradient-to-r ${grade.gradient} bg-clip-text text-transparent`}>
         {grade.text}
       </h2>
 
-      <div className="text-5xl font-bold text-foreground mb-4">
+      <div className="text-7xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-6">
         {score}/{total}
       </div>
 
-      <div className="text-lg text-muted-foreground mb-6">
+      <div className="inline-block px-6 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-xl font-bold text-foreground mb-8">
         {percentage.toFixed(0)}% Correct
       </div>
 
       {feedback && (
-        <div className="mt-6 p-6 bg-muted rounded-lg text-left animate-slide-up" aria-live="polite">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-2">
+        <div className="mt-8 p-8 bg-gradient-to-br from-muted to-muted/50 rounded-2xl text-left animate-slide-up border border-border/50" aria-live="polite">
+          <h3 className="text-base font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-3 flex items-center gap-2">
+            <span className="inline-block w-3 h-3 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse"></span>
             Personalized Feedback
           </h3>
-          <p className="text-foreground leading-relaxed">{feedback}</p>
+          <p className="text-lg text-foreground leading-relaxed">{feedback}</p>
         </div>
       )}
     </Card>

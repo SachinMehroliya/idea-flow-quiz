@@ -38,14 +38,18 @@ export function TopicSelection() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 animate-fade-in">
-      <div className="max-w-6xl mx-auto">
-        <header className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-foreground mb-4 bg-gradient-to-r from-primary via-primary-light to-secondary bg-clip-text text-transparent">
-            AI-Assisted Knowledge Quiz
+    <div className="min-h-screen py-16 px-4 animate-fade-in">
+      <div className="max-w-7xl mx-auto">
+        <header className="text-center mb-16 space-y-6">
+          <div className="inline-block animate-float">
+            <span className="text-7xl">🎯</span>
+          </div>
+          <h1 className="text-7xl font-black mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent drop-shadow-2xl">
+            AI Knowledge Quiz
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose a topic and test your knowledge with AI-generated questions
+          <p className="text-2xl text-muted-foreground max-w-3xl mx-auto font-medium">
+            Choose your favorite topic and challenge yourself with
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-bold"> AI-powered questions</span>
           </p>
         </header>
 
@@ -72,11 +76,16 @@ export function TopicSelection() {
               onClick={handleGenerateQuiz}
               disabled={!selectedTopic}
               size="lg"
-              className="btn-gradient text-lg px-8 py-6 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-hero text-xl px-12 py-8 disabled:opacity-30 disabled:cursor-not-allowed font-bold rounded-2xl"
             >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Generate Quiz
+              <Sparkles className="w-6 h-6 mr-3" />
+              Generate My Quiz
             </Button>
+            {!selectedTopic && (
+              <p className="text-sm text-muted-foreground mt-4 animate-pulse">
+                👆 Select a topic above to continue
+              </p>
+            )}
           </div>
         </main>
       </div>
